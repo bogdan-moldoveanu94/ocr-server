@@ -1,0 +1,66 @@
+@(text : String, imageBytes: String)
+
+@main("OCR") {
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <a href="/" class="lang-logo">
+            <img src="@routes.Assets.at("images/lang-logo.png")">
+        </a>
+        <h1>Optical Character Recognition service - Scala app</h1>
+        <p>This is a sample Play application deployed to Heroku. It allows you to upload an image, from which the
+            readable text is then extracted.</p>
+    </div>
+</div>
+<div class="container">
+    @if(imageBytes != null){
+    <div class="alert alert-success text-center" role="alert">
+        Image OCR successful! You can see your results below
+    </div>
+    <div class="jumbotron text-center">
+        <h3>Text obtained</h3>
+
+        <p style="color: rgb(217, 204, 238);font-size: 14px;">@text</p>
+        <hr>
+        <h3>Processed image </h3>
+        <img style="max-width:95%" src="data:image/jpeg;base64,@imageBytes" alt="Result">
+    </div>
+    <h3>Upload another image</h3>
+    }
+
+    @helper.form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
+    <div class="form-group">
+        <label for="exampleInputFile">Image input</label>
+        <input type="file" id="exampleInputFile" name="picture">
+        <p class="help-block">Input an image which you wish to be uploaded.</p>
+    </div>
+    <div class="form-group">
+        <label>Post-process output</label>
+        <div class="checkbox">
+            <label><input type="checkbox" name="drawchar" value="true">Draw character bounding boxes</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" name="drawword" value="true">Draw word bounding boxes</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" name="drawrow" value="true">Draw row bounding boxes</label>
+        </div>
+        <hr>
+        <div class="checkbox">
+            <label><input type="checkbox" name="renderContent" value="true">Render content back in page?</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Upload image</button>
+    </div>
+
+    }
+
+    <div class="alert alert-info text-center" role="alert">
+        To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a
+            href="https://devcenter.heroku.com/articles/getting-started-with-scala" class="alert-link">Getting Started
+        with Scala/Play on Heroku</a> tutorial.
+    </div>
+</div>
+
+}
